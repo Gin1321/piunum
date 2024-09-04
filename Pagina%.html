@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barra de Carga</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            width: 300px;
+        }
+        #progressBar {
+            width: 100%;
+            background-color: #ddd;
+            margin-top: 20px;
+            position: relative;
+        }
+        #progressBar div {
+            height: 30px;
+            width: 0;
+            background-color: #4caf50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-weight: bold;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Piensa en un número</h1>
+        <input type="number" id="inputNumber" placeholder="Número" />
+        <button onclick="startLoading()">Cargar</button>
+
+        <div id="progressBar">
+            <div id="progress"></div>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function startLoading() {
+            var number = document.getElementById('inputNumber').value;
+            if (number === "") {
+                alert("Por favor, piensa un número");
+                return;
+            }
+
+            var progressBar = document.getElementById('progress');
+            progressBar.style.width = '0%';
+            progressBar.innerText = '0%';
+
+            var width = 0;
+            var duration = 5000; // Duración de 5 segundos
+            var intervalTime = 50; // Intervalos de tiempo en milisegundos
+            var step = (intervalTime / duration) * 100;
+
+            var interval = setInterval(function() {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('result').innerText = "El número que pensaste es: " + number;
+                } else {
+                    width += step;
+                    progressBar.style.width = width + '%';
+                    progressBar.innerText = Math.floor(width) + '%';
+                }
+            }, intervalTime);
+        }
+    </script>
+</body>
+</html>
